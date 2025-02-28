@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Morning Routine Generator</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+    />
+    <style>
+      @font-face {
+        font-family: "aApeMount";
+        src: url("./fonts/aApeMount.otf") format("opentype");
+      }
+      body {
+        font-family: "Poppins", Arial, sans-serif;
+        margin: 20px;
+        background-color: rgba(0, 0, 0, 0.9);
+        color: #ffffff;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0px auto;
+        text-align: center;
+      }
+      .activities {
+        margin-top: 25px;
+      }
+      .activity {
+        margin-top: 20px;
+      }
+      h1,
+      h2,
+      p {
+        margin: 10px 0;
+        text-align: center;
+      }
+
+      h1 {
+        font-family: "aApeMount", Arial, sans-serif;
+        font-size: 3em;
+      }
+      h2 {
+        font-family: "aApeMount", Arial, sans-serif;
+        font-size: 5em;
+        margin-bottom: -20px; /* Adjusted margin to bring the index closer to the blurb */
+      }
+      iframe {
+        width: 100%;
+        height: 315px;
+        margin-top: 0px;
+      }
+      select {
+        background-color: #363636;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 12px;
+        font-size: 16px;
+        margin: 10px auto; /* Centered the select element */
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        display: block; /* Added to make the select element a block element */
+      }
+      select:hover {
+        background-color: #313131;
+      }
+      .generate-button {
+        background-color: #363636; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: block; /* Changed to block to ensure it is beneath the select element */
+        font-size: 16px;
+        margin: 10px auto; /* Centered the button */
+        cursor: pointer;
+        border-radius: 12px;
+        transition: background-color 0.3s ease;
+      }
+      .generate-button:hover {
+        background-color: #313131;
+      }
+
+      /* Style the buttons that are used to open and close the accordion panel */
+      .accordion {
+        background-color: #eee;
+        color: #444;
+        font-size: 1rem;
+        font-family: "Poppins", Arial, sans-serif;
+        cursor: pointer;
+        padding: 18px;
+        width: 60%;
+        text-align: left;
+        border: none;
+        outline: none;
+        transition: 0.4s;
+        margin: 40px auto 1px auto; /* Added vertical spacing above the accordion */
+        display: block; /* Ensure the accordion is centered */
+        margin-top: 5px;
+      }
+
+      /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+      .active,
+      .accordion:hover {
+        background-color: #ccc;
+      }
+
+      /* Style the accordion panel. Note: hidden by default */
+      .panel {
+        padding: 0 18px;
+        background-color: white;
+        color: black; /* Set text color to black */
+        display: none;
+        overflow: hidden;
+        width: 57.5%; /* Match the width of the accordion */
+        margin: 0 auto; /* Center the panel */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Morning Routine Generator</h1>
+      <label for="activityCount">Select number of activities:</label>
+      <select id="activityCount" aria-label="Number of activities">
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+      <button class="generate-button" onclick="generateRoutine()">
+        Generate Routine
+      </button>
+      <section class="activities" id="activities" aria-live="polite"></section>
+    </div>
+
+    <h1>FAQ</h1>
+    <button class="accordion">What is the Morning Routine Generator?</button>
+    <div class="panel">
+      <p>
+        The Morning Routine Generator is designed to help users find a way to
+        have structure in the morning. By selecting a number of activities,
+        users can generate a personalized routine that includes various
+        exercises including Qi Gong, Yoga, Breathing Exercises and Guided
+        Meditations Fullproof practices to start their day with energy and
+        focus.
+      </p>
+    </div>
+
+    <button class="accordion">
+      How can I best use the Morning Routine Generator?
+    </button>
+    <div class="panel">
+      <p>
+        Decide on a number of activities you would like to participate in.<br />
+        Click "Generate Routine" to preview your routine.<br />
+        Be present and mindful through each activity.<br />
+        Go at your own pace and enjoy.<br />
+        Restart your activity if necessary.
+      </p>
+    </div>
+
+    <button class="accordion">Why chose Fullproof for Mornings?</button>
+    <div class="panel">
+      <p>
+        Fullproof is an excellent resource for morning routines because it
+        offers a comprehensive and structured approaches to starting your day.
+      </p>
+    </div>
+
+    <script>
+      const activitiesList = [
+        {
+          url: "https://www.youtube.com/embed/8sJ5N9nsEmM",
+          blurb: "Activate your energy with 13 Minutes of Body Activation.",
+        },
+        {
+          url: "https://www.youtube.com/embed/z7dgv9zPPYA",
+          blurb: "Flow into the day with this Qi Gong practice.",
+        },
+        {
+          url: "https://www.youtube.com/embed/3GtFp6sz5zM",
+          blurb: "Destress with Qigong to Purge and Tonify.",
+        },
+        {
+          url: "https://www.youtube.com/embed/Y88zYo0YlOo",
+          blurb: "Daily Qigong Routine that is Easy and Effective!",
+        },
+        {
+          url: "https://www.youtube.com/embed/VJ7QlwZPCQ8",
+          blurb:
+            "Reset your mind-body connection with DAILY ENERGY RECHARGE with YOQI",
+        },
+        {
+          url: "https://www.youtube.com/embed/9WJfaL1NiJA",
+          blurb:
+            "Strengthen your boundaries with this guided Qigong with Qigong for Vitality.",
+        },
+        {
+          url: "https://www.youtube.com/embed/o_73FeXw3ZI",
+          blurb: "Start your day with this refreshing yoga flow.",
+        },
+        {
+          url: "https://www.youtube.com/embed/ZhQ_2JU4Nv8",
+          blurb: "Find Stability and Focus with this 10 minute yoga flow.",
+        },
+        {
+          url: "https://www.youtube.com/embed/PzSVekqNiuA",
+          blurb: "One of the best things you can do in the morning. Yoga.",
+        },
+        {
+          url: "https://www.youtube.com/embed/q_x_4UsytgY",
+          blurb:
+            "Participate in the Energisation Exercise by the Expanding Light Retreat.",
+        },
+        {
+          url: "https://www.youtube.com/embed/lwlEJ2O-6HM",
+          blurb:
+            "Deepen your breath and consciousness with this DMT breathing exercise.",
+        },
+        {
+          url: "https://www.youtube.com/embed/gCyoa2XPV5o",
+          blurb:
+            "Relax and center yourself with this 20 minute meditation session.",
+        },
+      ];
+      function generateRoutine() {
+        const activityCount = document.getElementById("activityCount").value;
+        const activitiesContainer = document.getElementById("activities");
+        activitiesContainer.innerHTML = "";
+
+        const shuffledActivities = activitiesList.sort(
+          () => 0.5 - Math.random()
+        );
+        const selectedActivities = shuffledActivities.slice(0, activityCount);
+
+        selectedActivities.forEach((activity, index) => {
+          const activityElement = document.createElement("article");
+          activityElement.className = "activity";
+          activityElement.innerHTML = `
+                      <h2> ${index + 1}</h2>
+                      <p>${activity.blurb}</p>
+                      <iframe src="${activity.url}" title="Activity ${
+            index + 1
+          }" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      `;
+          activitiesContainer.appendChild(activityElement);
+        });
+      }
+
+      var acc = document.getElementsByClassName("accordion");
+      var i;
+
+      for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+          /* Toggle between adding and removing the "active" class,
+      to highlight the button that controls the panel */
+          this.classList.toggle("active");
+
+          /* Toggle between hiding and showing the active panel */
+          var panel = this.nextElementSibling;
+          if (panel.style.display === "block") {
+            panel.style.display = "none";
+          } else {
+            panel.style.display = "block";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
